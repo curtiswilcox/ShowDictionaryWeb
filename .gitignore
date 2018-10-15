@@ -16,6 +16,12 @@
 .env.test.local
 .env.production.local
 
+.idea/*
+.idea/codeStyles/codeStyleConfig.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/vcs.xml
+
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
