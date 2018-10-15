@@ -41,13 +41,13 @@ code {
 
 .show {
   background: white;
-  border: thin solid grey;
   border-radius: calc(var(--icon-size) / 8);
   width: var(--icon-size);
   height: var(--icon-size);
 }
 
 .showImage {
+  border: thin solid grey;
   border-radius: calc(var(--icon-size) / 8);
   width: var(--icon-size);
   height: var(--icon-size);
