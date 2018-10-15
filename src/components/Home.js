@@ -27,7 +27,7 @@ class Home extends Component {
             <Link
               key={index}
               to={{
-                pathname: '/' + strip(show.showname),//encodeURIComponent(this.state.shows[index].showname).replace(/%20/g, '+'),
+                pathname: '/show-dictionary/' + strip(show.showname),//encodeURIComponent(this.state.shows[index].showname).replace(/%20/g, '+'),
               }}
             >
               <ShowIcon
@@ -70,8 +70,9 @@ class Home extends Component {
 
     const data = [];
     snapshot.forEach(child => {
-      const showname = child.val()['Name'];
-      const titleCard = child.val()['URL'];
+      const show = child.val();
+      const showname = show.Name;
+      const titleCard = show.URL;
 
       data.push({showname, titleCard})
     });

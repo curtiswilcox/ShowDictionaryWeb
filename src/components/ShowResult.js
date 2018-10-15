@@ -1,5 +1,6 @@
 import Episode from './Episode';
 import React, {Component} from 'react';
+import ShowIcon from './ShowIcon';
 import firebase from '../util/firebase';
 import {strip} from '../util/helper';
 
@@ -73,7 +74,8 @@ class ShowResult extends Component {
     // const showname = decodeURIComponent(props.location.pathname.replace('/', '').replace(/\+/g, '%20'));
     this.state = {
       // name: props.match.params.name,
-      stripped: strip(props.location.pathname.split("/")[props.location.pathname.split("/").length -  1]),
+      stripped: strip(props.location.pathname.split("/")[props.location.pathname.split("/").length - 1]),
+      showInfo: {},
       episodes: [],
     };
     document.title = 'Information';
@@ -91,42 +93,21 @@ class ShowResult extends Component {
     }
 
     return (
-      <div className='episodes'>
-        {
-          this.state.episodes.map((episode, i) =>
-            <Episode key={i} episode={episode}/>
-          )
-        }
+      <div className="episodes-wrapper">
+        <ShowIcon iconSize="10em" titleCard={this.state.showInfo.url} />
+        <div className='episodes'>
+          {
+            this.state.episodes.map((episode, i) =>
+              <div key={i}>
+                {episode.numberInSeason === 1 && <h1>Season {episode.seasonNumber}</h1>}
+                <Episode episode={episode}/>
+              </div>
+            )
+          }
+        </div>
       </div>
     );
 
-    // return (
-    //   <div className='episodes'>
-    //     <table>
-    //       <tr>
-    //         <th>Code</th>
-    //         <th>Name</th>
-    //         <th>Airdate</th>
-    //         <th>Writer</th>
-    //         <th>Summary</th>
-    //         <th>Location</th>
-    //       </tr>
-    //       {
-    //         this.state.episodes.map((key, index) =>
-    //           <Episode
-    //             key={index}
-    //             code={this.state.episodes[index].code}
-    //             name={this.state.episodes[index].name}
-    //             airdate={this.state.episodes[index].airdate}
-    //             writer={this.state.episodes[index].writer}
-    //             summary={this.state.episodes[index].summary}
-    //             location={this.state.episodes[index].location}
-    //           />
-    //         )
-    //       }
-    //     </table>
-    //   </div>
-    // );
   }
 
   componentDidMount() {
@@ -143,7 +124,10 @@ class ShowResult extends Component {
     const shows = await firebase.database().ref('shows').once('value');
     shows.forEach(child => {
       if (child.val()['Filename'] === this.state.stripped) {
-        document.title = child.val()['Name'] + ' Information';
+        document.title = child.val().Name + ' Information';
+        const description = child.val().Description;
+        const url = child.val().URL;
+        this.setState({showInfo: {description, url}})
       }
     });
 
@@ -151,14 +135,17 @@ class ShowResult extends Component {
 
     const data = [];
     snapshot.forEach(child => {
+      const ep = child.val();
       const episode = {
-        // code: child.val()['Code'],
-        code: child.val().Code,
-        name: child.val().Name,
-        airdate: child.val().Airdate,
-        writer: child.val().Writer,
-        summary: child.val().Summary,
-        location: child.val().Location,
+        code: ep.Code,
+        name: ep.Name,
+        airdate: ep.Airdate,
+        writer: ep.Writer,
+        summary: ep.Summary,
+        location: ep.Location,
+        seriesNumber: parseInt(ep.EpisodeInSeries),
+        seasonNumber: parseInt(ep.SeasonNumber),
+        numberInSeason: parseInt(ep.EpisodeInSeason),
       };
 
       data.push(episode);

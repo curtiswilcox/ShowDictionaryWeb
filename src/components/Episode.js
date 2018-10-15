@@ -1,41 +1,27 @@
-import React, {Component} from 'react';
+import React from 'react';
 import moment from 'moment';
 
-class Episode extends Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {
-      summaryVisible: true,
-    }
-  }
 
-  toggleSummaryVisibility = () => this.setState(prevState =>
-    ({summaryVisible: !prevState.summaryVisible})
-  );
+function Episode({episode}) {
+  return (
+    <div
+      className='episode'
+    >
+      <span className='code'>{episode.code}</span>
 
-  render() {
-    const {episode} = this.props;
-    return (
-      <div
-        className='episode'
-      >
-        <div className='code'>
-          <span>{episode.code} </span>
-        </div>
+      <h1 className='name'>{episode.name}</h1>
 
-        <h1 className='name'>{episode.name} </h1>
+      <span className="episodenum">{episode.seriesNumber}</span>
 
-        <span className='writer'>{episode.writer} </span>
-        <span className='airdate'>{moment(episode.airdate).format('MMM DD YYYY').toLocaleString()} </span>
-
-        <span className='location'>{episode.location} </span>
-        <div hidden={!this.state.summaryVisible} className='summary'>
-          <span>{episode.summary}</span>
-        </div>
+      <div className="writerairdate">
+        <span className='writer'>{episode.writer}</span>
+        <span className='airdate'>{moment(episode.airdate).format('MMM DD, YYYY').toLocaleString()} </span>
       </div>
-    );
-  }
 
+
+      <div className='summary'>{episode.summary}</div>
+    </div>
+  );
 }
 
 export default Episode;

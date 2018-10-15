@@ -2,10 +2,8 @@ import React from 'react';
 
 function ShowIcon(props) {
   return (
-    <div className='show'>
-      <button className='showButton'>
-        <img className='showImage' src={props.titleCard} alt={props.name}/>
-      </button>
+    <div className='show' style={props.iconSize ? { '--icon-size' : props.iconSize } : {}} >
+      <img className='showImage' src={props.titleCard} alt={props.name}/>
     </div>
   );
 }

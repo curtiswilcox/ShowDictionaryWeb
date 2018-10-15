@@ -1,5 +1,6 @@
 :root {
-  --background: #eeeeee
+  --background: #eeeeee;
+  --icon-size: 10em;
 }
 
 
@@ -29,33 +30,37 @@ code {
 
 .ShowDictionary {
   background-color: var(--background);
-  display: inline-grid;
+  display: grid;
   justify-content: center;
-  grid-template-columns: repeat(8, 1fr);
+  grid-gap: 2em 1em;
+  grid-template-columns: repeat(auto-fill, minmax(var(--icon-size), 1fr));
   padding: .5% 1%;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .show {
-  display: inline-grid;
-  /*align-items: center;*/
-  /*justify-items: center;*/
-  /*grid-auto-flow: column;*/
+  background: white;
+  border: thin solid grey;
+  border-radius: calc(var(--icon-size) / 8);
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 .showImage {
-  width: 14em;
-  height: 14em;
+  border-radius: calc(var(--icon-size) / 8);
+  width: var(--icon-size);
+  height: var(--icon-size);
   background-size: cover;
 }
 
-.showButton img {
-  object-fit: fill;
+.episodes-wrapper {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .episode {
   display: grid;
-
-  width: 50%;
   margin: 1em auto;
   padding: 1em;
 
@@ -64,49 +69,55 @@ code {
 
   align-content: center;
 
-  grid-template-rows: 4fr 2fr 1fr auto;
+  /*grid-row-gap: 1em;*/
+  /*grid-column-gap: 1em;*/
+  grid-template-rows: 1fr 1fr 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template:
-      "id name name"
-      "location writer airdate"
+      "code . episodenum"
+      "name name name"
+      "writerairdate writerairdate writerairdate"
       "summary summary summary";
-
 }
+
+
 
 .code {
-  grid-area: id;
+  grid-area: code;
   font-size: large;
-
-  display: flex;
-  /*align-content: center;*/
-  /*justify-content: center;*/
-}
-
-.code > * {
-  text-align: center;
-  vertical-align: central;
-}
-
-.code > *:before {
-  content: '#';
 }
 
 .name {
   grid-area: name;
+  text-align: center;
+}
+
+.episodenum {
+  grid-area: episodenum;
+  text-align: right;
+}
+
+.episodenum:before {
+  content: '#';
+}
+
+.writerairdate {
+  grid-area: writerairdate;
+  text-align: center;
 }
 
 .airdate {
-  grid-area: airdate;
+  /*grid-area: airdate;*/
 }
 
 .writer {
-  grid-area: writer;
-  text-align: end;
+  /*grid-area: writer;*/
+  /*text-align: end;*/
 }
 
 .writer:after {
   content: '•';
-  padding-right: .8em;
+  padding-right: .5em;
   padding-left: .5em;
 }
 
@@ -117,6 +128,7 @@ code {
 
 .summary {
   grid-area: summary;
-
+  line-height: 1.3em;
   padding: 1em 0;
+  text-align: justify;
 }
