@@ -1,12 +1,12 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 // import logo from './logo.svg';
 import '../styles/App.css';
 
-// import firebase from './firebase.js';
 import Home from './Home';
-// import ShowIcon from './ShowIcon';
-import ShowResult from "./ShowResult";
+import ShowResult from './ShowResult';
+
+import  {strip} from '../util/helper';
 
 
 // class App extends Component {
@@ -16,7 +16,7 @@ function App(props) {
       <Switch>
         <Route
           exact={true}
-          path="/"
+          path='/show-dictionary/'
           render={(props) =>
             <Home
               {...props}
@@ -30,7 +30,7 @@ function App(props) {
           }
         />
         <Route
-          path="/:name"
+          path='/show-dictionary/:name'
           render={(props) => {
             return (
               <ShowResult
@@ -41,6 +41,12 @@ function App(props) {
             );
           }}
         />
+        <Route
+          path="/:name"
+          render={(props) => (
+            <Redirect to={"/show-dictionary" + strip(props.location.pathname)}/>
+          )}
+        />
       </Switch>
     </div>
   );
@@ -49,7 +55,7 @@ function App(props) {
 //   constructor(props) {
 //     super(props);
 //     // this.state = {
-//     // chosenShow: "",
+//     // chosenShow: '',
 //     // chosenShowInfo: [],
 //     // }
 //   }
@@ -60,7 +66,7 @@ function App(props) {
 //         <Switch>
 //           <Route
 //             exact={true}
-//             path="/"
+//             path='/'
 //             render={(props) =>
 //               <Home
 //                 {...props}
@@ -74,7 +80,7 @@ function App(props) {
 //             }
 //           />
 //           <Route
-//             path="/:name"
+//             path='/:name'
 //             render={(props) => {
 //               return (
 //                 <ShowResult
@@ -89,16 +95,16 @@ function App(props) {
 //       </div>
 //     );
 //
-//     //         {/*<header className="App-header">*/}
-//     //         {/*<img src={logo} className="App-logo" alt="logo"/>*/}
+//     //         {/*<header className='App-header'>*/}
+//     //         {/*<img src={logo} className='App-logo' alt='logo'/>*/}
 //     //         {/*<p>*/}
 //     //         {/*Edit <code>src/App.js</code> and save to reload.*/}
 //     //         {/*</p>*/}
 //     //         {/*<a*/}
-//     //         {/*className="App-link"*/}
-//     //         {/*href="https://reactjs.org"*/}
-//     //         {/*target="_blank"*/}
-//     //         {/*rel="noopener noreferrer"*/}
+//     //         {/*className='App-link'*/}
+//     //         {/*href='https://reactjs.org'*/}
+//     //         {/*target='_blank'*/}
+//     //         {/*rel='noopener noreferrer'*/}
 //     //         {/*>*/}
 //     //         {/*Learn React*/}
 //     //         {/*</a>*/}

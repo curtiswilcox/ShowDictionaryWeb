@@ -2,8 +2,10 @@
   "name": "show-dictionary",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://http://cwwilcox.w3.uvm.edu/show-dictionary",
   "dependencies": {
     "firebase": "^5.5.3",
+    "moment": "^2.22.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",

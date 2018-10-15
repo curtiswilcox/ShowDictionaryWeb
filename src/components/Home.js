@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import firebase from "./firebase";
+import firebase from '../util/firebase';
 import ShowIcon from './ShowIcon';
-import {Link} from "react-router-dom";
-import {strip} from "../util/episode";
+import {Link} from 'react-router-dom';
+import {strip} from '../util/helper';
 
 class Home extends Component {
   constructor(props) {
@@ -10,36 +10,31 @@ class Home extends Component {
     this.state = {
       // isWaitingShowLoad: true,
       // isDisplayingShowInfo: false,
-      // chosenShow: "",
+      // chosenShow: '',
       // chosenShowInfo: [],
       // redirect: false,
       shows: [],
     };
     this.updateApp = props.updateApp;
-    document.title = "Show Dictionary";
+    document.title = 'Show Dictionary';
   }
 
   render() {
     return (
-      <div className="ShowDictionary">
+      <div className='ShowDictionary'>
         {
-          this.state.shows.map((key, index) =>
+          this.state.shows.map((show, index) =>
             <Link
               key={index}
               to={{
-                pathname: "/" + encodeURIComponent(this.state.shows[index].showname).replace(/%20/g, "+"),
-                // alternative: don't strip here (do it in ShowResult instead)
-                // then the link would have %20 everywhere
-                // Mighty Med instead of mightymed
-                // or you could do like +'s Mighty+Med
-                state: {show: this.state.shows[index].showname}
+                pathname: '/' + strip(show.showname),//encodeURIComponent(this.state.shows[index].showname).replace(/%20/g, '+'),
               }}
             >
               <ShowIcon
                 key={index}
-                name={this.state.shows[index].showname}
-                stripped={strip(this.state.shows[index].showname)}
-                titleCard={this.state.shows[index].titleCard}
+                name={show.showname}
+                stripped={strip(show.showname)}
+                titleCard={show.titleCard}
                 // onClick={() => {
                 // this.loadShowInformation(this.state.shows[index].showname).then((info) => {
                 // this.setState({
@@ -64,7 +59,7 @@ class Home extends Component {
       // this.setState({isWaitingShowLoad: false});
       Object.keys(shows.map((key, index) => (
         this.setState({
-          shows: this.state.shows.concat([shows[index]])
+          shows: this.state.shows.concat(key)
         })
       )));
     })
@@ -105,9 +100,9 @@ class Home extends Component {
   //
   // noinspection JSMethodCanBeStatic
   // strip(showname) {
-  //   showname = showname.toString().toLowerCase().split(" ").join("");
-  //   showname = showname.split(":").join("");
-  //   showname = showname.split("'").join("");
+  //   showname = showname.toString().toLowerCase().split(' ').join('');
+  //   showname = showname.split(':').join('');
+  //   showname = showname.split(''').join('');
   //   return showname;
   // }
 }

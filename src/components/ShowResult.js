@@ -1,12 +1,12 @@
-import Episode from "./Episode";
+import Episode from './Episode';
 import React, {Component} from 'react';
-import firebase from "./firebase";
-import {strip} from "../util/episode";
+import firebase from '../util/firebase';
+import {strip} from '../util/helper';
 
 // const ShowResult = (props) => {
 //   if (props.episodes !== undefined) {
 //     return (
-//       <div className="episodes">
+//       <div className='episodes'>
 //         <table>
 //           <tr>
 //             <th>Code</th>
@@ -39,86 +39,50 @@ import {strip} from "../util/episode";
 //   }
 // };
 
-class EpisodeJacob extends Component {
-
-  constructor(...args) {
-    super(...args);
-
-    this.state = {
-      summaryVisible: false,
-    }
-  }
-
-  toggleSummaryVisible = () => this.setState(prevState =>
-    ({ summaryVisible: !prevState.summaryVisible })
-  )
-
-  render() {
-
-    const {episode} = this.props
-
-    return <div
-      onClick={this.toggleSummaryVisible}
-      style={{border: '1px solid pink', margin: '1em'}}
-    >
-      <span>{episode.code}</span>
-      <span>{episode.name}</span>
-      <span>{episode.writer}</span>
-      <div hidden={!this.state.summaryVisible}>
-        <span>{episode.summary}</span>
-      </div>
-    </div>
-
-
-  }
-}
-
-function EpsiodeJacobHHHHHHH({ episode }) {
-  let hiddenSummary = true;
-  return <div
-    // onClick={() => hiddenSummary = !hiddenSummary}
-    onClick={(...args) => console.log(args)}
-    style={{border: '1px solid pink', margin: '1em'}}
-  >
-    <span>{episode.code} </span>
-    <span>{episode.name} </span>
-    <span>{episode.writer} </span>
-    <div hidden={hiddenSummary}>
-      <span>{episode.summary}</span>
-    </div>
-
-
-    {/*<Episode*/}
-    {/*key={index}*/}
-    {/*code={this.state.episodes[index].code}*/}
-    {/*name={this.state.episodes[index].name}*/}
-    {/*airdate={this.state.episodes[index].airdate}*/}
-    {/*writer={this.state.episodes[index].writer}*/}
-    {/*summary={this.state.episodes[index].summary}*/}
-    {/*location={this.state.episodes[index].location}*/}
-    {/*/>*/}
-  </div>
-}
+// function EpsiodeJacobHHHHHHH({ episode }) {
+//   let hiddenSummary = true;
+//   return <div
+//     // onClick={() => hiddenSummary = !hiddenSummary}
+//     onClick={(...args) => console.log(args)}
+//     style={{border: '1px solid pink', margin: '1em'}}
+//   >
+//     <span>{episode.code} </span>
+//     <span>{episode.name} </span>
+//     <span>{episode.writer} </span>
+//     <div hidden={hiddenSummary}>
+//       <span>{episode.summary}</span>
+//     </div>
+//
+//
+//     {/*<Episode*/}
+//     {/*key={index}*/}
+//     {/*code={this.state.episodes[index].code}*/}
+//     {/*name={this.state.episodes[index].name}*/}
+//     {/*airdate={this.state.episodes[index].airdate}*/}
+//     {/*writer={this.state.episodes[index].writer}*/}
+//     {/*summary={this.state.episodes[index].summary}*/}
+//     {/*location={this.state.episodes[index].location}*/}
+//     {/*/>*/}
+//   </div>
+// }
 
 class ShowResult extends Component {
   constructor(props) {
     super(props);
 
-    const showname = decodeURIComponent(props.location.pathname.replace("/", "").replace(/\+/g, "%20"));
-
-    console.log(props);
+    // const showname = decodeURIComponent(props.location.pathname.replace('/', '').replace(/\+/g, '%20'));
     this.state = {
       // name: props.match.params.name,
-      stripped: strip(showname),
-      episodes: []
+      stripped: strip(props.location.pathname.split("/")[props.location.pathname.split("/").length -  1]),
+      episodes: [],
     };
-    document.title = showname + " Information";
+    document.title = 'Information';
   }
 
   render() {
     if (this.state.episodes.length === 0) {
       return (
-        <div className="noepisodes">
+        <div className='noepisodes'>
           <h1>
             No episodes.
           </h1>
@@ -127,33 +91,17 @@ class ShowResult extends Component {
     }
 
     return (
-      <div className="episodes">
+      <div className='episodes'>
         {
           this.state.episodes.map((episode, i) =>
-
-
-
-            <div key={i}>
-              <EpisodeJacob episode={episode}/>
-
-
-              {/*<Episode*/}
-              {/*key={index}*/}
-              {/*code={this.state.episodes[index].code}*/}
-              {/*name={this.state.episodes[index].name}*/}
-              {/*airdate={this.state.episodes[index].airdate}*/}
-              {/*writer={this.state.episodes[index].writer}*/}
-              {/*summary={this.state.episodes[index].summary}*/}
-              {/*location={this.state.episodes[index].location}*/}
-              {/*/>*/}
-            </div>
+            <Episode key={i} episode={episode}/>
           )
         }
       </div>
     );
 
     // return (
-    //   <div className="episodes">
+    //   <div className='episodes'>
     //     <table>
     //       <tr>
     //         <th>Code</th>
@@ -183,27 +131,34 @@ class ShowResult extends Component {
 
   componentDidMount() {
     this.loadShowInformation().then((episodes) => {
-      Object.keys(episodes.map((key, index) => (
+      Object.keys(episodes.map((episode, index) => (
         this.setState({
-          episodes: this.state.episodes.concat([episodes[index]])
+          episodes: this.state.episodes.concat(episode)
         })
       )));
     });
   }
 
   async loadShowInformation() {
+    const shows = await firebase.database().ref('shows').once('value');
+    shows.forEach(child => {
+      if (child.val()['Filename'] === this.state.stripped) {
+        document.title = child.val()['Name'] + ' Information';
+      }
+    });
+
     const snapshot = await firebase.database().ref(this.state.stripped).once('value');
 
     const data = [];
     snapshot.forEach(child => {
-      // console.log(child.val());
       const episode = {
-        code: child.val()['Code'],
-        name: child.val()['Name'],
-        airdate: child.val()['Airdate'],
-        writer: child.val()['Writer'],
-        summary: child.val()['Summary'],
-        location: child.val()['Location'],
+        // code: child.val()['Code'],
+        code: child.val().Code,
+        name: child.val().Name,
+        airdate: child.val().Airdate,
+        writer: child.val().Writer,
+        summary: child.val().Summary,
+        location: child.val().Location,
       };
 
       data.push(episode);
