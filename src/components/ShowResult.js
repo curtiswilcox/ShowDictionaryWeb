@@ -82,15 +82,7 @@ class ShowResult extends Component {
   }
 
   render() {
-    if (this.state.episodes.length === 0) {
-      return (
-        <div className='noepisodes'>
-          <h1>
-            No episodes.
-          </h1>
-        </div>
-      );
-    }
+    // if length is zero, display spinner
 
     return (
       <div className="episodes-wrapper">

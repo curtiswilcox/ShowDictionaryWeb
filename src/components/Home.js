@@ -56,7 +56,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.getShows().then((shows) => {
-      // this.setState({isWaitingShowLoad: false});
       Object.keys(shows.map((key, index) => (
         this.setState({
           shows: this.state.shows.concat(key)
@@ -76,6 +75,14 @@ class Home extends Component {
 
       data.push({showname, titleCard})
     });
+
+    data.sort((show0, show1) => {
+      const name0 = show0.showname.toLowerCase().replace(/^the /, '');
+      const name1 = show1.showname.toLowerCase().replace(/^the /, '');
+      console.log(name0,  name1);
+      return name0 < name1 ? -1 : 1;
+    });
+
     return data;
   }
 
