@@ -2,7 +2,7 @@ import Episode from './Episode';
 import React, {Component} from 'react';
 import ShowIcon from './ShowIcon';
 import firebase from '../util/firebase';
-import {strip} from '../util/helper';
+import {capitalizeFirstLetter, strip} from '../util/helper';
 import Loader from 'react-loader-spinner';
 
 
@@ -44,12 +44,15 @@ class ShowResult extends Component {
         </div>
         <div className='episodes'>
           {
-            this.state.episodes.map((episode, i) =>
-              <div key={i}>
-                {episode.numberInSeason === 1 && <h1>Season {episode.seasonNumber}</h1>}
-                <Episode episode={episode}/>
-              </div>
-            )
+            this.state.episodes.map((episode, i) => {
+              const capitalSeasonType = capitalizeFirstLetter(this.state.showInfo.seasonType);
+              return (
+                <div key={i}>
+                  {episode.numberInSeason === 1 && <h1>{capitalSeasonType + " " + episode.seasonNumber}</h1>}
+                  <Episode episode={episode}/>
+                </div>
+              );
+            })
           }
         </div>
       </div>
@@ -74,9 +77,10 @@ class ShowResult extends Component {
       if (child.val()['Filename'] === this.state.stripped) {
         const name = child.val().Name;
         const description = child.val().Description;
+        const seasonType = child.val().TypeOfSeasons;
         const url = child.val().URL;
         document.title = name + ' Information';
-        this.setState({showInfo: {description, name, url}})
+        this.setState({showInfo: {description, name, seasonType, url}})
       }
     });
 
