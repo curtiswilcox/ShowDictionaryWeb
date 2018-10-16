@@ -11,6 +11,7 @@ import {strip} from '../util/helper';
 
 // class App extends Component {
 function App(props) {
+  console.log(props);
   return (
     <div>
       <Switch>
