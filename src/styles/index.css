@@ -4,7 +4,8 @@
 }
 
 * {
-  padding: 0; margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -72,13 +73,17 @@ code {
 }
 
 .showinfo {
-  display: grid;
+  /*display: grid;*/
+  line-height: 1.2em;
   margin: 1em auto;
+  overflow: auto;
   padding: 1em;
+  text-align: justify;
 
+  /*grid-gap: 1em;
   grid-template-rows: 1fr 1fr 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template: "showcard showdesc";
+  grid-template: "showcard showdesc";*/
 }
 
 @media only screen and (max-width: 768px) {
@@ -88,29 +93,33 @@ code {
   }
 
   [class=showinfo] {
-    display: grid;
+        /*display: grid;*/
+    line-height: 1.2em;
     margin: 1em auto;
+    overflow: auto;
     padding: 1em;
+    text-align: justify;
 
+    /*
     grid-gap: 1em;
     grid-template-rows: 1fr 1fr 1fr auto;
     grid-template-columns: 1fr;
     grid-template: "showcard" "showdesc";
+    */
   }
 
-  [class=showdesc] {
-    padding: 0;
-    text-align: justify;
-  }
-
-  [class=showcard] { /* TODO text "wrap" around image? */
-    /*align-self: center;*/
-    /*justify-self: center;*/
-  }
+  /*[class=showdesc] {*/
+    /*padding: 0;*/
+    /*text-align: justify;*/
+  /*}*/
 }
 
 .showcard {
-  grid-area: showcard;
+  /*grid-area: showcard;*/
+  float: left;
+  padding-right: 1em;
+  width: 10em;
+  height: 10em;
 }
 
 /*.namedesc {
@@ -123,9 +132,10 @@ code {
   margin: 0 auto;
 }*/
 
-.showdesc {
+/*.showdesc {
+  float: left;
   text-align: justify;
-}
+}*/
 
 .episode {
   display: grid;
@@ -139,11 +149,7 @@ code {
 
   grid-template-rows: 1fr 1fr 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template:
-      "code . episodenum"
-      "name name name"
-      "writerairdate writerairdate writerairdate"
-      "summary summary summary";
+  grid-template: "code . episodenum" "name name name" "writerairdate writerairdate writerairdate" "summary summary summary";
 }
 
 .code {

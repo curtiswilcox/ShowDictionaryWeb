@@ -35,13 +35,17 @@ class ShowResult extends Component {
 
     return (
       <div className='episodes-wrapper'>
-        <div className='showinfo'>
-          <ShowIcon className='showcard' iconSize='10em' titleCard={this.state.showInfo.url}/>
-          {/*<div className="namedesc">*/}
-          {/*<span className='showname'>{this.state.showInfo.name}</span>*/}
-          <span className='showdesc'>{this.state.showInfo.description}</span>
-          {/*</div>*/}
+
+        <div className="showinfo">
+          <img className="showcard" src={this.state.showInfo.url} alt={this.state.showInfo.name + " title card"}/>
+          {this.state.showInfo.description}
         </div>
+        {/*<div className='showinfo'>*/}
+        {/*/!*<ShowIcon className='showcard' iconSize='10em' titleCard={this.state.showInfo.url}/>*!/*/}
+        {/*<img src={this.state.showInfo.url}/>*/}
+        {/*{this.state.showInfo.description}*/}
+        {/*/!*<span className='showdesc'>{this.state.showInfo.description}</span>*!/*/}
+        {/*</div>*/}
         <div className='episodes'>
           {
             this.state.episodes.map((episode, i) => {
