@@ -77,15 +77,16 @@ code {
 @media only screen and (max-width: 768px) {
   [class=episodes-wrapper] {
     width: 90%;
+    margin: 0 auto;
   }
 
-  [class=showinfo] {
+  [class=showinfo] { /* TODO this part isn't working */
     display: grid;
     margin: 1em auto;
     padding: 1em;
 
     grid-template-rows: 1fr 1fr 1fr auto;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template: "showcard" "showdesc";
   }
 }
