@@ -3,7 +3,6 @@
   --icon-size: 10em;
 }
 
-
 body {
   background-color: var(--background);
   margin: 0;
@@ -59,9 +58,9 @@ code {
   margin: 0 auto;
 }
 
-@media only screen  and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   [class=episodes-wrapper] {
-    width: 95%;
+    width: 90%;
   }
 }
 
@@ -85,8 +84,6 @@ code {
       "writerairdate writerairdate writerairdate"
       "summary summary summary";
 }
-
-
 
 .code {
   grid-area: code;
