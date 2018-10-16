@@ -26,9 +26,8 @@ class Home extends Component {
           this.state.shows.map((show, index) =>
             <Link
               key={index}
-              target={"_blank"}
               to={{
-                pathname: '/show-dictionary/' + strip(show.showname),//encodeURIComponent(this.state.shows[index].showname).replace(/%20/g, '+'),
+                pathname: this.props.location.pathname + strip(show.showname),
               }}
             >
               <ShowIcon
