@@ -89,6 +89,12 @@ code {
     grid-template-columns: 1fr;
     grid-template: "showcard" "showdesc";
   }
+
+  [class=showdesc] {
+    padding-left: 0;
+    padding-top: 1em;
+    text-align: justify;
+  }
 }
 
 .showcard {
