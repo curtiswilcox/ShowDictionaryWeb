@@ -11,7 +11,7 @@ class ShowResult extends Component {
     super(props);
 
     this.state = {
-      stripped: strip(props.location.pathname.split("/")[props.location.pathname.split("/").length - 1]),
+      stripped: strip(props.location.pathname.split('/')[props.location.pathname.split('/').length - 1]),
       loading: true,
       showInfo: {},
       episodes: [],
@@ -22,10 +22,10 @@ class ShowResult extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div className="loadingIcon">
+        <div className='loadingIcon'>
           <Loader
-            type={"TailSpin"}
-            color={"#00BFFF"}
+            type={'TailSpin'}
+            color={'#00BFFF'}
             height={100}
             width={100}
           />
@@ -35,7 +35,13 @@ class ShowResult extends Component {
 
     return (
       <div className='episodes-wrapper'>
-        <ShowIcon iconSize="10em" titleCard={this.state.showInfo.url}/>
+        <div className='showinfo'>
+          <ShowIcon className='showcard' iconSize='10em' titleCard={this.state.showInfo.url}/>
+          {/*<div className="namedesc">*/}
+          {/*<span className='showname'>{this.state.showInfo.name}</span>*/}
+          <span className='showdesc'>{this.state.showInfo.description}</span>
+          {/*</div>*/}
+        </div>
         <div className='episodes'>
           {
             this.state.episodes.map((episode, i) =>
@@ -66,10 +72,11 @@ class ShowResult extends Component {
     const shows = await firebase.database().ref('shows').once('value');
     shows.forEach(child => {
       if (child.val()['Filename'] === this.state.stripped) {
-        document.title = child.val().Name + ' Information';
+        const name = child.val().Name;
         const description = child.val().Description;
         const url = child.val().URL;
-        this.setState({showInfo: {description, url}})
+        document.title = name + ' Information';
+        this.setState({showInfo: {description, name, url}})
       }
     });
 

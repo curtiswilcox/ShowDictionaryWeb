@@ -4,9 +4,7 @@ import moment from 'moment';
 
 function Episode({episode}) {
   return (
-    <div
-      className='episode'
-    >
+    <div className='episode'>
       <span className='code'>{episode.code}</span>
 
       <h1 className='name'>{episode.name}</h1>
@@ -17,7 +15,6 @@ function Episode({episode}) {
         <span className='writer'>{episode.writer}</span>
         <span className='airdate'>{moment(episode.airdate).format('MMM DD, YYYY').toLocaleString()} </span>
       </div>
-
 
       <div className='summary'>{episode.summary}</div>
     </div>

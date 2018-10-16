@@ -70,6 +70,35 @@ code {
   }
 }
 
+.showinfo {
+  display: grid;
+  margin: 1em auto;
+  padding: 1em;
+
+  grid-template-rows: 1fr 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template: "showcard showdesc";
+}
+
+.showcard {
+  grid-area: showcard;
+}
+
+/*.namedesc {
+  grid-area: namedesc;
+  display: grid;
+  padding-left: 1em;
+}*/
+
+/*.showname {
+  margin: 0 auto;
+}*/
+
+.showdesc {
+  padding-left: 1em;
+  text-align: justify;
+}
+
 .episode {
   display: grid;
   margin: 1em auto;
@@ -80,8 +109,6 @@ code {
 
   align-content: center;
 
-  /*grid-row-gap: 1em;*/
-  /*grid-column-gap: 1em;*/
   grid-template-rows: 1fr 1fr 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template:
