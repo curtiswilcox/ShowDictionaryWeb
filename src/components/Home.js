@@ -26,6 +26,7 @@ class Home extends Component {
           this.state.shows.map((show, index) =>
             <Link
               key={index}
+              target={"_blank"}
               to={{
                 pathname: '/show-dictionary/' + strip(show.showname),//encodeURIComponent(this.state.shows[index].showname).replace(/%20/g, '+'),
               }}
@@ -35,17 +36,6 @@ class Home extends Component {
                 name={show.showname}
                 stripped={strip(show.showname)}
                 titleCard={show.titleCard}
-                // onClick={() => {
-                // this.loadShowInformation(this.state.shows[index].showname).then((info) => {
-                // this.setState({
-                //   chosenShow: this.state.shows[index].showname,
-                //   chosenShowInfo: info,
-                // redirect: true,
-                // isDisplayingShowInfo: true,
-                // });
-                // this.updateApp(this.state.shows[index].showname);
-                // });
-                //}}
               />
             </Link>
           )
@@ -79,7 +69,6 @@ class Home extends Component {
     data.sort((show0, show1) => {
       const name0 = show0.showname.toLowerCase().replace(/^the /, '');
       const name1 = show1.showname.toLowerCase().replace(/^the /, '');
-      console.log(name0,  name1);
       return name0 < name1 ? -1 : 1;
     });
 
