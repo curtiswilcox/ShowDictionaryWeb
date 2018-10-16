@@ -2,7 +2,7 @@
   "name": "show-dictionary",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://http://cwwilcox.w3.uvm.edu/show-dictionary",
+  "homepage": "https://cwwilcox.w3.uvm.edu/show-dictionary",
   "dependencies": {
     "firebase": "^5.5.3",
     "moment": "^2.22.2",
