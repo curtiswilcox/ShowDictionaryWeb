@@ -3,6 +3,10 @@
   --icon-size: 10em;
 }
 
+* {
+  padding: 0; margin: 0;
+}
+
 body {
   background-color: var(--background);
   margin: 0;
@@ -43,6 +47,9 @@ code {
   border-radius: calc(var(--icon-size) / 8);
   width: var(--icon-size);
   height: var(--icon-size);
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
 }
 
 .showImage {
@@ -80,20 +87,25 @@ code {
     margin: 0 auto;
   }
 
-  [class=showinfo] { /* TODO this part isn't working */
+  [class=showinfo] {
     display: grid;
     margin: 1em auto;
     padding: 1em;
 
+    grid-gap: 1em;
     grid-template-rows: 1fr 1fr 1fr auto;
     grid-template-columns: 1fr;
     grid-template: "showcard" "showdesc";
   }
 
   [class=showdesc] {
-    padding-left: 0;
-    padding-top: 1em;
+    padding: 0;
     text-align: justify;
+  }
+
+  [class=showcard] { /* TODO text "wrap" around image? */
+    /*align-self: center;*/
+    /*justify-self: center;*/
   }
 }
 
@@ -112,7 +124,6 @@ code {
 }*/
 
 .showdesc {
-  padding-left: 1em;
   text-align: justify;
 }
 
