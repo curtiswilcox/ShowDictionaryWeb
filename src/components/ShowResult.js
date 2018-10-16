@@ -3,78 +3,16 @@ import React, {Component} from 'react';
 import ShowIcon from './ShowIcon';
 import firebase from '../util/firebase';
 import {strip} from '../util/helper';
+import Loader from 'react-loader-spinner';
 
-// const ShowResult = (props) => {
-//   if (props.episodes !== undefined) {
-//     return (
-//       <div className='episodes'>
-//         <table>
-//           <tr>
-//             <th>Code</th>
-//             <th>Name</th>
-//             <th>Airdate</th>
-//             <th>Writer</th>
-//             <th>Summary</th>
-//             <th>Location</th>
-//           </tr>
-//           {
-//             props.episodes.map((key, index) =>
-//               <Episode
-//                 key={index}
-//                 code={props.episodes[index].code}
-//                 name={props.episodes[index].name}
-//                 airdate={props.episodes[index].airdate}
-//                 writer={props.episodes[index].writer}
-//                 summary={props.episodes[index].summary}
-//                 location={props.episodes[index].location}
-//               />
-//             )
-//           }
-//         </table>
-//       </div>
-//     );
-//   } else {
-//     return (
-//       <div><h1>Empty!</h1></div>
-//     )
-//   }
-// };
-
-// function EpsiodeJacobHHHHHHH({ episode }) {
-//   let hiddenSummary = true;
-//   return <div
-//     // onClick={() => hiddenSummary = !hiddenSummary}
-//     onClick={(...args) => console.log(args)}
-//     style={{border: '1px solid pink', margin: '1em'}}
-//   >
-//     <span>{episode.code} </span>
-//     <span>{episode.name} </span>
-//     <span>{episode.writer} </span>
-//     <div hidden={hiddenSummary}>
-//       <span>{episode.summary}</span>
-//     </div>
-//
-//
-//     {/*<Episode*/}
-//     {/*key={index}*/}
-//     {/*code={this.state.episodes[index].code}*/}
-//     {/*name={this.state.episodes[index].name}*/}
-//     {/*airdate={this.state.episodes[index].airdate}*/}
-//     {/*writer={this.state.episodes[index].writer}*/}
-//     {/*summary={this.state.episodes[index].summary}*/}
-//     {/*location={this.state.episodes[index].location}*/}
-//     {/*/>*/}
-//   </div>
-// }
 
 class ShowResult extends Component {
   constructor(props) {
     super(props);
 
-    // const showname = decodeURIComponent(props.location.pathname.replace('/', '').replace(/\+/g, '%20'));
     this.state = {
-      // name: props.match.params.name,
       stripped: strip(props.location.pathname.split("/")[props.location.pathname.split("/").length - 1]),
+      loading: true,
       showInfo: {},
       episodes: [],
     };
@@ -82,11 +20,22 @@ class ShowResult extends Component {
   }
 
   render() {
-    // if length is zero, display spinner
+    if (this.state.loading) {
+      return (
+        <div className="loadingIcon">
+          <Loader
+            type={"TailSpin"}
+            color={"#00BFFF"}
+            height={100}
+            width={100}
+          />
+        </div>
+      );
+    }
 
     return (
-      <div className="episodes-wrapper">
-        <ShowIcon iconSize="10em" titleCard={this.state.showInfo.url} />
+      <div className='episodes-wrapper'>
+        <ShowIcon iconSize="10em" titleCard={this.state.showInfo.url}/>
         <div className='episodes'>
           {
             this.state.episodes.map((episode, i) =>
@@ -109,6 +58,7 @@ class ShowResult extends Component {
           episodes: this.state.episodes.concat(episode)
         })
       )));
+      this.setState({loading: false});
     });
   }
 

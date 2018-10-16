@@ -3,16 +3,13 @@ import firebase from '../util/firebase';
 import ShowIcon from './ShowIcon';
 import {Link} from 'react-router-dom';
 import {strip} from '../util/helper';
+import Loader from 'react-loader-spinner';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // isWaitingShowLoad: true,
-      // isDisplayingShowInfo: false,
-      // chosenShow: '',
-      // chosenShowInfo: [],
-      // redirect: false,
+      loading: true,
       shows: [],
     };
     this.updateApp = props.updateApp;
@@ -20,6 +17,18 @@ class Home extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div className="loadingIcon">
+          <Loader
+            type={"TailSpin"}
+            color={"#00BFFF"}
+            height={100}
+            width={100}
+          />
+        </div>
+      );
+    }
     return (
       <div className='ShowDictionary'>
         {
@@ -50,6 +59,7 @@ class Home extends Component {
           shows: this.state.shows.concat(key)
         })
       )));
+      this.setState({loading: false});
     })
   }
 

@@ -53,6 +53,12 @@ code {
   background-size: cover;
 }
 
+.loadingIcon {
+  position:fixed;
+  top:50%;
+  left:50%
+}
+
 .episodes-wrapper {
   width: 50%;
   margin: 0 auto;
