@@ -68,6 +68,10 @@ code {
   [class=episodes-wrapper] {
     width: 90%;
   }
+
+  [class=showinfo] {
+    grid-template: "showcard" "showdesc";
+  }
 }
 
 .showinfo {
