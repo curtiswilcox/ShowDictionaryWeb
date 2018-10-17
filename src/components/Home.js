@@ -21,7 +21,7 @@ class Home extends Component {
       return (
         <div className="loadingIcon">
           <Loader
-            type={"TailSpin"}
+            type={"Ball-Triangle"}
             color={"#00BFFF"}
             height={100}
             width={100}
