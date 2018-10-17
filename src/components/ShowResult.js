@@ -38,7 +38,8 @@ class ShowResult extends Component {
 
         <div className="showinfo">
           {/*<img className="showcard" src={this.state.showInfo.url} alt={this.state.showInfo.name + " title card"}/>*/}
-          <ShowIcon spanClass={'showprev'} imgClass={'showcard'} titleCard={this.state.showInfo.url} name={this.state.showInfo.name} iconsize={"10em"}/>
+          <ShowIcon spanClass={'showprev'} imgClass={'showcard'} titleCard={this.state.showInfo.url}
+                    name={this.state.showInfo.name} iconsize={"10em"}/>
           <span className='showdesc'>{this.state.showInfo.description}</span>
         </div>
         {/*<div className='showinfo'>*/}
@@ -51,9 +52,16 @@ class ShowResult extends Component {
           {
             this.state.episodes.map((episode, i) => {
               const capitalSeasonType = capitalizeFirstLetter(this.state.showInfo.seasonType);
+
+              let seasonTitle = null;
+              if (this.state.showInfo.seasonTitles.length !== 0) {
+                seasonTitle = this.state.showInfo.seasonTitles[episode.seasonNumber - 1];
+              }
+
               return (
                 <div key={i}>
-                  {episode.numberInSeason === 1 && <h1>{capitalSeasonType + " " + episode.seasonNumber}</h1>}
+                  {episode.numberInSeason === 1 &&
+                  <h1>{capitalSeasonType + " " + episode.seasonNumber + (seasonTitle == null ? "" : ": " + seasonTitle)}</h1>}
                   <Episode episode={episode}/>
                 </div>
               );
@@ -66,13 +74,22 @@ class ShowResult extends Component {
   }
 
   componentDidMount() {
-    this.loadShowInformation().then((episodes) => {
+    this.loadShowInformation().then((showInfo) => {
+      const episodes = showInfo[0];
+      const seasonTitles = showInfo[1];
       Object.keys(episodes.map((episode, index) => (
         this.setState({
           episodes: this.state.episodes.concat(episode)
         })
       )));
-      this.setState({loading: false});
+      this.setState(prevState => ({
+          showInfo: {
+            ...prevState.showInfo,
+            seasonTitles,
+          },
+          loading: false,
+        }
+      ));
     });
   }
 
@@ -86,15 +103,24 @@ class ShowResult extends Component {
         const seasonType = show.TypeOfSeasons;
         const url = show.URL;
         document.title = name + ' Information';
-        this.setState({showInfo: {description, name, seasonType, url}})
+        this.setState({showInfo: {description, name, seasonType, url, seasonTitles: []}})
       }
     });
 
     const snapshot = await firebase.database().ref(this.state.stripped).once('value');
-
     const data = [];
+    const seasonTitles = [];
     snapshot.forEach(child => {
       const ep = child.val();
+      try {
+        const seasonTitle = ep.SeasonTitle;
+        if (!seasonTitles.includes(seasonTitle)) {
+          seasonTitles.push(seasonTitle);
+        }
+      } catch (e) {
+        // no season title, continue
+      }
+
       const episode = {
         code: ep.Code,
         name: ep.Name,
@@ -108,7 +134,13 @@ class ShowResult extends Component {
       };
       data.push(episode);
     });
-    return data;
+    /*this.setState(prevState => ({
+      showInfo: {
+        ...prevState.showInfo,
+        seasonTitles,
+      }
+    }));*/
+    return [data, seasonTitles];
   }
 }
 
