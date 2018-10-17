@@ -41,6 +41,8 @@ class Home extends Component {
             >
               <ShowIcon
                 key={index}
+                imgClass={'showimage'}
+                spanClass={'showlink'}
                 name={show.showname}
                 stripped={strip(show.showname)}
                 titleCard={show.titleCard}
@@ -59,7 +61,7 @@ class Home extends Component {
           shows: this.state.shows.concat(key)
         })
       )));
-      this.setState({loading: false});
+      this.setState({loading: false})
     })
   }
 

@@ -1,9 +1,9 @@
 import Episode from './Episode';
 import React, {Component} from 'react';
-import ShowIcon from './ShowIcon';
 import firebase from '../util/firebase';
 import {capitalizeFirstLetter, strip} from '../util/helper';
 import Loader from 'react-loader-spinner';
+import ShowIcon from "./ShowIcon";
 
 
 class ShowResult extends Component {
@@ -37,8 +37,9 @@ class ShowResult extends Component {
       <div className='episodes-wrapper'>
 
         <div className="showinfo">
-          <img className="showcard" src={this.state.showInfo.url} alt={this.state.showInfo.name + " title card"}/>
-          {this.state.showInfo.description}
+          {/*<img className="showcard" src={this.state.showInfo.url} alt={this.state.showInfo.name + " title card"}/>*/}
+          <ShowIcon spanClass={'showprev'} imgClass={'showcard'} titleCard={this.state.showInfo.url} name={this.state.showInfo.name} iconsize={"10em"}/>
+          <span className='showdesc'>{this.state.showInfo.description}</span>
         </div>
         {/*<div className='showinfo'>*/}
         {/*/!*<ShowIcon className='showcard' iconSize='10em' titleCard={this.state.showInfo.url}/>*!/*/}
@@ -78,11 +79,12 @@ class ShowResult extends Component {
   async loadShowInformation() {
     const shows = await firebase.database().ref('shows').once('value');
     shows.forEach(child => {
-      if (child.val()['Filename'] === this.state.stripped) {
-        const name = child.val().Name;
-        const description = child.val().Description;
-        const seasonType = child.val().TypeOfSeasons;
-        const url = child.val().URL;
+      const show = child.val();
+      if (show.Filename === this.state.stripped) {
+        const name = show.Name;
+        const description = show.Description;
+        const seasonType = show.TypeOfSeasons;
+        const url = show.URL;
         document.title = name + ' Information';
         this.setState({showInfo: {description, name, seasonType, url}})
       }
@@ -104,7 +106,6 @@ class ShowResult extends Component {
         seasonNumber: parseInt(ep.SeasonNumber),
         numberInSeason: parseInt(ep.EpisodeInSeason),
       };
-
       data.push(episode);
     });
     return data;

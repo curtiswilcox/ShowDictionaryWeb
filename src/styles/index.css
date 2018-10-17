@@ -43,7 +43,7 @@ code {
   margin: 0 auto;
 }
 
-.show {
+.showlink {
   background: white;
   border-radius: calc(var(--icon-size) / 8);
   width: var(--icon-size);
@@ -51,9 +51,10 @@ code {
   display: inline-flex;
   align-content: center;
   justify-content: center;
+  float: left;
 }
 
-.showImage {
+.showimage {
   border: thin solid grey;
   border-radius: calc(var(--icon-size) / 8);
   width: var(--icon-size);
@@ -73,17 +74,11 @@ code {
 }
 
 .showinfo {
-  /*display: grid;*/
   line-height: 1.2em;
   margin: 1em auto;
   overflow: auto;
   padding: 1em;
   text-align: justify;
-
-  /*grid-gap: 1em;
-  grid-template-rows: 1fr 1fr 1fr auto;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template: "showcard showdesc";*/
 }
 
 @media only screen and (max-width: 768px) {
@@ -93,19 +88,11 @@ code {
   }
 
   [class=showinfo] {
-        /*display: grid;*/
     line-height: 1.2em;
     margin: 1em auto;
     overflow: auto;
     padding: 1em;
     text-align: justify;
-
-    /*
-    grid-gap: 1em;
-    grid-template-rows: 1fr 1fr 1fr auto;
-    grid-template-columns: 1fr;
-    grid-template: "showcard" "showdesc";
-    */
   }
 
   /*[class=showdesc] {*/
@@ -118,8 +105,8 @@ code {
   /*grid-area: showcard;*/
   float: left;
   padding-right: 1em;
-  width: 10em;
-  height: 10em;
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 /*.namedesc {
@@ -132,10 +119,9 @@ code {
   margin: 0 auto;
 }*/
 
-/*.showdesc {
-  float: left;
+.showdesc {
   text-align: justify;
-}*/
+}
 
 .episode {
   display: grid;
@@ -149,7 +135,11 @@ code {
 
   grid-template-rows: 1fr 1fr 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template: "code . episodenum" "name name name" "writerairdate writerairdate writerairdate" "summary summary summary";
+  grid-template:
+      "code . episodenum"
+      "name name name"
+      "writerairdate writerairdate writerairdate"
+      "summary summary summary";
 }
 
 .code {
