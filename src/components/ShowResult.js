@@ -20,6 +20,7 @@ class ShowResult extends Component {
       filteredEpisodes: [],
       chosenSearchMethod: '',
       searchText: '',
+      hasSelectedSeason: false,
     };
     document.title = 'Information';
   }
@@ -50,6 +51,9 @@ class ShowResult extends Component {
                     key={index}
                     onClick={() => {
                       this.setState({chosenSearchMethod: method});
+                      if (this.state.chosenSearchMethod !== SearchMethod.season) {
+                        this.setState({hasSelectedSeason: false});
+                      }
 
                       if (/*method !== SearchMethod.airdate && */method !== SearchMethod.season && method !== SearchMethod.random) {
                         const searchElement = document.getElementsByClassName('search-method-box')[0];
@@ -97,7 +101,7 @@ class ShowResult extends Component {
                             Array(this.state.showInfo.numberOfSeasons).fill(0).map((season, i) =>
                               <li
                                 onClick={() => {
-                                  this.setState({searchText: i + 1},
+                                  this.setState({searchText: i + 1, hasSelectedSeason: true},
                                     () => {
                                       this.filterEpisodes()
                                     });
@@ -116,7 +120,11 @@ class ShowResult extends Component {
           </ul>
           <div className="search-method-box" style={{display: 'none'}}>
             <SearchBar
-              placeholder={'Enter episode ' + (this.state.chosenSearchMethod === SearchMethod.season ? this.state.showInfo.seasonType : this.state.chosenSearchMethod) + '...'}
+              placeholder={'Enter episode ' +
+              (this.state.chosenSearchMethod === SearchMethod.season
+                ? this.state.showInfo.seasonType
+                : this.state.chosenSearchMethod)
+              + '...'}
               onClick={() => {
                 const searchText = document.getElementsByClassName('input-text')[0].value;
                 this.setState({searchText}, () => this.filterEpisodes());
@@ -148,7 +156,7 @@ class ShowResult extends Component {
                 return (
                   <div key={i}>
                     {
-                      (((this.state.searchText === '' || this.state.chosenSearchMethod === SearchMethod.season) &&
+                      (((this.state.searchText === '' || (this.state.chosenSearchMethod === SearchMethod.season && this.state.hasSelectedSeason)) &&
                         ((i === 0) || // the first one
                           (episode.episodeInSeason === '0') || // "200", "400"
                           (episode.episodeInSeason === '1' && this.state.filteredEpisodes[i - 1].episodeInSeason !== '0')))) && // "501" and no "500"
