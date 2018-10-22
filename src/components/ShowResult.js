@@ -51,7 +51,7 @@ class ShowResult extends Component {
                     onClick={() => {
                       this.setState({chosenSearchMethod: method});
 
-                      if (method !== SearchMethod.airdate && method !== SearchMethod.season && method !== SearchMethod.random) {
+                      if (/*method !== SearchMethod.airdate && */method !== SearchMethod.season && method !== SearchMethod.random) {
                         const searchElement = document.getElementsByClassName('search-method-box')[0];
                         if (this.state.chosenSearchMethod !== method || (this.state.chosenSearchMethod === method && searchElement.style.display === 'none')) {
                           toggleVisibility('search-method-box', 'block');
@@ -82,10 +82,11 @@ class ShowResult extends Component {
                         } else {
                           toggleVisibility('dropdown-content', 'none');
                         }
-                      } else if (method === SearchMethod.airdate) {
-                        toggleVisibility('search-method-box', 'none');
-                        toggleVisibility('dropdown-content', 'none');
                       }
+                      // else if (method === SearchMethod.airdate) {
+                      //   toggleVisibility('search-method-box', 'none');
+                      //   toggleVisibility('dropdown-content', 'none');
+                      // }
                     }}
                   >
                     {capitalizeFirstLetter(method === SearchMethod.season ? this.state.showInfo.seasonType : method)}

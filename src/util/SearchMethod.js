@@ -1,7 +1,7 @@
 export const SearchMethod = {
   name: 'name',
   keyword: 'keyword',
-  airdate: 'airdate',
+  // airdate: 'airdate',
   writer: 'writer',
   number: 'number',
   season: 'season',

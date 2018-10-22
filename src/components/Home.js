@@ -71,8 +71,8 @@ class Home extends Component {
     const data = [];
     snapshot.forEach(child => {
       const show = child.val();
-      const showname = show.Name;
-      const titleCard = show.URL;
+      const showname = show.name;
+      const titleCard = show.url;
 
       data.push({showname, titleCard})
     });
