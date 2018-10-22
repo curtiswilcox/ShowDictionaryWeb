@@ -9,7 +9,7 @@ function Episode({episode}) {
 
       <h1 className='name'>{episode.name}</h1>
 
-      <span className="episodenum">{episode.seriesNumber}</span>
+      <span className="episodenum">{episode.episodeInSeries}</span>
 
       <div className="writerairdate">
         <span className='writer'>{episode.writer}</span>

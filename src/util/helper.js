@@ -8,3 +8,13 @@ export function strip(showname) {
   showname = showname.split("'").join("");
   return showname;
 }
+
+export function toggleVisibility(className, status) {
+  try {
+    const searchElement = document.getElementsByClassName(className)[0];
+    searchElement.style.display = status;
+    document.getElementsByClassName('input-text')[0].value = '';
+  } catch (error) {
+    // class doesn't exist, continue
+  }
+}

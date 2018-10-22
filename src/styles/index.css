@@ -1,3 +1,6 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
+
 :root {
   --background: #eeeeee;
   --icon-size: 10em;
@@ -74,6 +77,78 @@ code {
   margin: 0 auto;
 }
 
+.header {
+  padding: 30px;
+  background: darkgrey;
+  color: white;
+  font-size: 1.5em;
+}
+
+.tabs {
+  display: grid;
+  justify-content: center;
+  grid-gap: 6%;
+  grid-template-columns: repeat(auto-fill, minmax(var(--icon-size), 1fr));
+  grid-template-rows: 1fr 1fr auto;
+  grid-template: "name keyword airdate writer epnumber season random" "inputtext inputtext inputtext inputtext inputtext inputbutton inputbutton";
+}
+
+.header ul {
+  list-style-type: none;
+}
+
+.header li {
+  padding: 10px;
+}
+
+.header li:hover {
+  background-color: grey;
+  cursor: pointer;
+}
+
+.headerairdate {
+  grid-area: airdate;
+}
+
+.headerkeyword {
+  grid-area: keyword;
+}
+
+.headername {
+  grid-area: name;
+}
+
+.headernumber {
+  grid-area: epnumber;
+}
+
+.headerrandom {
+  grid-area: random;
+}
+
+.headerseason {
+  grid-area: season;
+}
+
+.headerwriter {
+  grid-area: writer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: darkgrey;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content li {
+  padding: 12px 16px;
+  display: block;
+  font-size: 20px;
+}
+
 .showinfo {
   line-height: 1.2em;
   margin: 1em auto;
@@ -95,33 +170,24 @@ code {
     padding: 1em;
     text-align: justify;
   }
+}
 
-  /*[class=showdesc] {*/
-    /*padding: 0;*/
-    /*text-align: justify;*/
-  /*}*/
+.showprev {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
+  float: left;
+  padding-right: 1em;
 }
 
 .showcard {
-  /*grid-area: showcard;*/
   float: left;
-  padding-right: 1em;
+  border-radius: calc(var(--icon-size) / 8);
   width: var(--icon-size);
   height: var(--icon-size);
-}
-
-/*.namedesc {
-  grid-area: namedesc;
-  display: grid;
-  padding-left: 1em;
-}*/
-
-/*.showname {
-  margin: 0 auto;
-}*/
-
-.showdesc {
-  text-align: justify;
+  background-size: cover;
 }
 
 .episode {
@@ -136,11 +202,7 @@ code {
 
   grid-template-rows: 1fr 1fr 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template:
-      "code . episodenum"
-      "name name name"
-      "writerairdate writerairdate writerairdate"
-      "summary summary summary";
+  grid-template: "code . episodenum" "name name name" "writerairdate writerairdate writerairdate" "summary summary summary";
 }
 
 .code {
@@ -192,4 +254,37 @@ code {
   line-height: 1.3em;
   padding: 1em 0;
   text-align: justify;
+}
+
+form.textsearch input[type=text] {
+  grid-area: inputtext;
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 78.4%;
+  background: #f1f1f1;
+}
+
+form.textsearch button {
+  grid-area: inputbutton;
+  float: right;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.textsearch button:hover {
+  background: #0b7dda;
+}
+
+form.textsearch::after {
+  content: "";
+  clear: both;
+  display: table;
 }
