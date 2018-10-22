@@ -255,6 +255,8 @@ class ShowResult extends Component {
             .filter(episode => parseInt(episode.episodeInSeries) === epNum)
             .map(episode => episode);
           this.setState({filteredEpisodes: filtered});
+        } else {
+          this.setState({filteredEpisodes: this.state.episodes});
         }
         break;
       case SearchMethod.keyword:
