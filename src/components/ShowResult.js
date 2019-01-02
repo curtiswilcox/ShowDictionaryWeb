@@ -2,10 +2,14 @@ import Episode from './Episode';
 import React, {Component} from 'react';
 import firebase from '../util/firebase';
 import {capitalizeFirstLetter, strip, toggleVisibility} from '../util/helper';
+import DayPicker from 'react-day-picker';
 import Loader from 'react-loader-spinner';
+// import moment from 'moment';
 import ShowIcon from "./ShowIcon";
 import SearchBar from './SearchBar';
 import {SearchMethod} from "../util/SearchMethod";
+
+import 'react-day-picker/lib/style.css';
 
 class ShowResult extends Component {
 
@@ -21,6 +25,7 @@ class ShowResult extends Component {
       chosenSearchMethod: '',
       searchText: '',
       hasSelectedSeason: false,
+      language: navigator.language.split('-')[0],
     };
     document.title = 'Information';
   }
@@ -55,17 +60,19 @@ class ShowResult extends Component {
                         this.setState({hasSelectedSeason: false});
                       }
 
-                      if (/*method !== SearchMethod.airdate && */method !== SearchMethod.season && method !== SearchMethod.random) {
+                      if (method !== SearchMethod.airdate && method !== SearchMethod.season && method !== SearchMethod.random) {
                         const searchElement = document.getElementsByClassName('search-method-box')[0];
                         if (this.state.chosenSearchMethod !== method || (this.state.chosenSearchMethod === method && searchElement.style.display === 'none')) {
                           toggleVisibility('search-method-box', 'block');
                         } else {
                           toggleVisibility('search-method-box', 'none');
                         }
+                        toggleVisibility('search-airdate', 'none');
                         toggleVisibility('dropdown-content', 'none');
                       } else if (method === SearchMethod.random) { // TODO come back from random button?
                         toggleVisibility('search-method-box', 'none');
                         toggleVisibility('dropdown-content', 'none');
+                        toggleVisibility('search-airdate', 'none');
                         let prevNum = -1;
                         let epNum = -1;
                         if (this.state.filteredEpisodes.length !== 0) {
@@ -86,11 +93,13 @@ class ShowResult extends Component {
                         } else {
                           toggleVisibility('dropdown-content', 'none');
                         }
-                      }
-                      // else if (method === SearchMethod.airdate) {
+                        toggleVisibility('search-airdate', 'none');
+                      // } else if (method === SearchMethod.airdate) {
                       //   toggleVisibility('search-method-box', 'none');
                       //   toggleVisibility('dropdown-content', 'none');
-                      // }
+                      //   const searchAirdateStyle = document.getElementsByClassName('search-airdate')[0].style.display;
+                      //   toggleVisibility('search-airdate', searchAirdateStyle === 'none' ? 'block' : 'none');
+                      }
                     }}
                   >
                     {capitalizeFirstLetter(method === SearchMethod.season ? this.state.showInfo.seasonType : method)}
@@ -132,6 +141,14 @@ class ShowResult extends Component {
               value={''}
             />
           </div>
+          {/*<div className="search-airdate" style={{display: 'none'}}>*/}
+            {/*<DayPicker*/}
+              {/*month={*/}
+                {/*new Date(parseInt(this.state.episodes[0].airdate.split('-')[0]),*/}
+                  {/*parseInt(this.state.episodes[0].airdate.split('-')[1]) - 1)*/}
+              {/*}*/}
+            {/*/>*/}
+          {/*</div>*/}
         </div>
 
         <div className='episodes-wrapper'>
@@ -195,17 +212,33 @@ class ShowResult extends Component {
       ));
     });
 
-    window.onclick = event => { // TODO this is hard-coded right now -- need to change (for-loop)
-      if (!document.getElementsByClassName('dropdown')[1].contains(event.target)) {
-        if (document.getElementsByClassName('dropdown-content')[0].style.display === 'block') {
-          document.getElementsByClassName('dropdown-content')[0].style.display = 'none';
-        }
-      }
-    };
+    // try {
+    //   window.onclick = event => {
+    //     for (const e in document.getElementsByClassName('dropdown')) {
+    //       if (!e.contains(event.target)) {
+    //         for (const c in document.getElementsByClassName('dropdown-content')) {
+    //           if (c.style.display === 'block') {
+    //             c.style.display = 'none';
+    //           }
+    //         }
+    //       }
+    //     }
+    //   };
+    // } catch {
+    //   // do nothing
+    // }
   }
 
   async loadShowInformation() {
-    const shows = await firebase.database().ref('shows').once('value');
+    let language = '';
+    if (this.state.language === 'en' || this.state.language === 'es') {
+      language = this.state.language;
+    } else {
+      language = 'en';
+    }
+    this.setState({language: language});
+
+    const shows = await firebase.database().ref('shows/' + language).once('value');
     shows.forEach(child => {
       const show = child.val();
       if (show.filename === this.state.stripped) {
@@ -215,11 +248,11 @@ class ShowResult extends Component {
         const seasonType = show.typeOfSeasons;
         const url = show.url;
         document.title = name + ' Information';
-        this.setState({showInfo: {description, name, numberOfSeasons, seasonType, url, seasonTitles: []}})
+        this.setState({showInfo: {description, name, numberOfSeasons, seasonType, url, seasonTitles: []}});
       }
     });
 
-    const snapshot = await firebase.database().ref(this.state.stripped).once('value');
+    const snapshot = await firebase.database().ref(this.state.stripped + '/' + language).once('value');
     const data = [];
     const seasonTitles = [];
     snapshot.forEach(child => {

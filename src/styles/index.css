@@ -1,8 +1,8 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
 
-
 :root {
   --background: #eeeeee;
+  --header-background: darkgrey;
   --icon-size: 10em;
 }
 
@@ -20,6 +20,10 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body .ShowDictionary {
+  padding: 1em 0 1em;
 }
 
 code {
@@ -79,7 +83,7 @@ code {
 
 .header {
   padding: 30px;
-  background: darkgrey;
+  background: var(--header-background);
   color: white;
   font-size: 1.5em;
 }
@@ -138,16 +142,15 @@ code {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: darkgrey;
-  min-width: 160px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  z-index: 1;
+  background-color: var(--header-background);
+  width: 10%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .dropdown-content li {
-  padding: 12px 16px;
+  padding: 5% 5%;
   display: block;
-  font-size: 20px;
+  font-size: 80%;
 }
 
 .showinfo {
@@ -288,4 +291,9 @@ form.textsearch::after {
   content: "";
   clear: both;
   display: table;
+}
+
+.search-airdate {
+  background-color: var(--header-background);
+  border: 1px solid black;
 }

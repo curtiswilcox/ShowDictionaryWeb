@@ -11,6 +11,7 @@ class Home extends Component {
     this.state = {
       loading: true,
       shows: [],
+      language: navigator.language.split('-')[0],
     };
     this.updateApp = props.updateApp;
     document.title = 'Show Dictionary';
@@ -66,7 +67,14 @@ class Home extends Component {
   }
 
   async getShows() {
-    const snapshot = await firebase.database().ref().child('shows').once('value');
+    let language = '';
+    if (this.state.language === 'en' || this.state.language === 'es') {
+      language = this.state.language;
+    } else {
+      language = 'en';
+    }
+    this.setState({language: language});
+    const snapshot = await firebase.database().ref().child('shows/' + language).once('value');
 
     const data = [];
     snapshot.forEach(child => {

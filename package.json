@@ -4,11 +4,13 @@
   "private": true,
   "homepage": "https://cwwilcox.w3.uvm.edu/show-dictionary",
   "dependencies": {
-    "firebase": "^5.5.3",
-    "moment": "^2.22.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-loader-spinner": "^2.0.6",
+    "firebase": "^5.7.2",
+    "moment": "^2.23.0",
+    "react": "^16.7.0",
+    "react-datepicker": "^1.8.0",
+    "react-day-picker": "^7.2.4",
+    "react-dom": "^16.7.0",
+    "react-loader-spinner": "^2.3.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4"
   },
