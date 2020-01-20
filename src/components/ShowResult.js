@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import firebase from '../util/firebase';
 import {capitalizeFirstLetter, strip, toggleVisibility} from '../util/helper';
 import DayPicker from 'react-day-picker';
-import Loader from 'react-loader-spinner';
+// import Loader from 'react-loader-spinner';
 // import moment from 'moment';
 import ShowIcon from "./ShowIcon";
 import SearchBar from './SearchBar';
@@ -31,18 +31,18 @@ class ShowResult extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return (
-        <div className='loadingIcon'>
-          <Loader
-            type={'Ball-Triangle'}
-            color={'#00BFFF'}
-            height={100}
-            width={100}
-          />
-        </div>
-      );
-    }
+    // if (this.state.loading) {
+    //   return (
+    //     <div className='loadingIcon'>
+    //       <Loader
+    //         type={'Ball-Triangle'}
+    //         color={'#00BFFF'}
+    //         height={100}
+    //         width={100}
+    //       />
+    //     </div>
+    //   );
+    // }
 
     return (
       <div className='episodepage'>
@@ -94,11 +94,11 @@ class ShowResult extends Component {
                           toggleVisibility('dropdown-content', 'none');
                         }
                         toggleVisibility('search-airdate', 'none');
-                      // } else if (method === SearchMethod.airdate) {
-                      //   toggleVisibility('search-method-box', 'none');
-                      //   toggleVisibility('dropdown-content', 'none');
-                      //   const searchAirdateStyle = document.getElementsByClassName('search-airdate')[0].style.display;
-                      //   toggleVisibility('search-airdate', searchAirdateStyle === 'none' ? 'block' : 'none');
+                      } else if (method === SearchMethod.airdate) {
+                        toggleVisibility('search-method-box', 'none');
+                        toggleVisibility('dropdown-content', 'none');
+                        const searchAirdateStyle = document.getElementsByClassName('search-airdate')[0].style.display;
+                        toggleVisibility('search-airdate', searchAirdateStyle === 'none' ? 'block' : 'none');
                       }
                     }}
                   >
@@ -141,14 +141,14 @@ class ShowResult extends Component {
               value={''}
             />
           </div>
-          {/*<div className="search-airdate" style={{display: 'none'}}>*/}
-            {/*<DayPicker*/}
-              {/*month={*/}
-                {/*new Date(parseInt(this.state.episodes[0].airdate.split('-')[0]),*/}
-                  {/*parseInt(this.state.episodes[0].airdate.split('-')[1]) - 1)*/}
-              {/*}*/}
-            {/*/>*/}
-          {/*</div>*/}
+          <div className="search-airdate" style={{display: 'none'}}>
+            <DayPicker
+              month={
+                new Date(parseInt(this.state.episodes[0].airdate.split('-')[0]),
+                  parseInt(this.state.episodes[0].airdate.split('-')[1]) - 1)
+              }
+            />
+          </div>
         </div>
 
         <div className='episodes-wrapper'>

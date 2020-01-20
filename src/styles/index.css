@@ -94,8 +94,8 @@ code {
   grid-gap: 6%;
   grid-template-columns: repeat(auto-fill, minmax(var(--icon-size), 1fr));
   grid-template-rows: 1fr 1fr auto;
-  grid-template: "name keyword writer epnumber season random" "inputtext inputtext inputtext inputtext inputbutton inputbutton";
-  /*grid-template: "name keyword airdate writer epnumber season random" "inputtext inputtext inputtext inputtext inputtext inputbutton inputbutton";*/
+  /*grid-template: "name keyword writer epnumber season random" "inputtext inputtext inputtext inputtext inputbutton inputbutton";*/
+  grid-template: "name keyword airdate writer epnumber season random" "inputtext inputtext inputtext inputtext inputtext inputbutton inputbutton";
 }
 
 .header ul {
