@@ -1,28 +1,27 @@
 {
-  "name": "show-dictionary",
+  "name": "showdictionary",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://wilcoxcurtis.com/ShowDictionary",
   "dependencies": {
-    "fibers": "^3.1.0",
-    "firebase": "^5.7.2",
-    "moment": "^2.24.0",
-    "node-sass": "^4.0.0",
-    "react": "^16.12.0",
-    "react-datepicker": "^2.11.0",
-    "react-day-picker": "^7.4.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0",
-    "sass": "^1.3.0",
-    "typescript": "^3.2.1"
+    "firebase": "^7.15.5",
+    "google-auth-library": "^5.10.1",
+    "moment": "^2.27.0",
+    "react": "^16.13.1",
+    "react-datepicker": "^3.0.0",
+    "react-day-picker": "^7.4.8",
+    "react-dom": "^16.13.1",
+    "react-loader-spinner": "^3.1.14",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.9.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && rm -rf ~/public_html/ShowDictionary && cp -r ./build ~/public_html/ShowDictionary"
+    "deploy": "node node_modules/react-scripts/scripts/build.js && rm -rf ~/public_html/ShowDictionary && cp -r ./build ~/public_html/ShowDictionary"
   },
   "eslintConfig": {
     "extends": "react-app"
