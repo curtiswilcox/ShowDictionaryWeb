@@ -40,8 +40,9 @@ class Home extends Component {
             <Link
               key={index}
               to={{
-                pathname: this.props.location.pathname + strip(show.showname),
+                pathname: this.props.location.pathname + strip(show.filename),
               }}
+              target='_blank'
             >
               <ShowIcon
                 key={index}
@@ -86,8 +87,9 @@ class Home extends Component {
     const json = JSON.parse(r);
     for (var i = 0; i < json.length; i++) {
       const showname = json[i].Name.toString();
+      const filename = json[i].Filename.toString()
       const titleCard = json[i].URL.toString();
-      data.push({showname, titleCard})
+      data.push({showname, filename, titleCard})
     }
 
     data.sort((show0, show1) => {
