@@ -1,4 +1,5 @@
 export function capitalizeFirstLetter(s) {
+  if (s === undefined) return '';
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 

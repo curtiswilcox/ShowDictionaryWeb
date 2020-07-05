@@ -1,6 +1,6 @@
 import Episode from './Episode';
 import React, {Component} from 'react';
-import firebase from '../util/firebase';
+// import firebase from '../util/firebase';
 import {capitalizeFirstLetter, strip, toggleVisibility} from '../util/helper';
 import DayPicker from 'react-day-picker';
 // import Loader from 'react-loader-spinner';
@@ -10,6 +10,8 @@ import SearchBar from './SearchBar';
 import {SearchMethod} from "../util/SearchMethod";
 
 import 'react-day-picker/lib/style.css';
+
+const axios = require('axios');
 
 class ShowResult extends Component {
 
@@ -31,6 +33,9 @@ class ShowResult extends Component {
   }
 
   render() {
+    if (this.state.loading) { return null }
+    // return null;
+
     // if (this.state.loading) {
     //   return (
     //     <div className='loadingIcon'>
@@ -144,8 +149,8 @@ class ShowResult extends Component {
           <div className="search-airdate" style={{display: 'none'}}>
             <DayPicker
               month={
-                new Date(parseInt(this.state.episodes[0].airdate.split('-')[0]),
-                  parseInt(this.state.episodes[0].airdate.split('-')[1]) - 1)
+                new Date(parseInt(this.state.episodes[0].Airdate.split('-')[0]),
+                  parseInt(this.state.episodes[0].Airdate.split('-')[1]) - 1)
               }
             />
           </div>
@@ -163,11 +168,13 @@ class ShowResult extends Component {
           <div className='episodes'>
             {
               this.state.filteredEpisodes.map((episode, i) => {
+
+                // console.log('nvmxc,nvmxc,vnxmcvnm,cxnv,xmc172' + this.state.showInfo.seasonTitles)
                 const capitalSeasonType = capitalizeFirstLetter(this.state.showInfo.seasonType);
 
                 let seasonTitle = null;
                 if (this.state.showInfo.seasonTitles.length !== 0) {
-                  seasonTitle = this.state.showInfo.seasonTitles[episode.seasonNumber - 1];
+                  seasonTitle = this.state.showInfo.seasonTitles[episode.SeasonNumber - 1];
                 }
 
                 return (
@@ -175,10 +182,10 @@ class ShowResult extends Component {
                     {
                       (((this.state.searchText === '' || (this.state.chosenSearchMethod === SearchMethod.season && this.state.hasSelectedSeason)) &&
                         ((i === 0) || // the first one
-                          (episode.episodeInSeason === '0') || // "200", "400"
-                          (episode.episodeInSeason === '1' && this.state.filteredEpisodes[i - 1].episodeInSeason !== '0')))) && // "501" and no "500"
+                          (episode.EpisodeInSeason === '0') || // "200", "400"
+                          (episode.EpisodeInSeason === '1' && this.state.filteredEpisodes[i - 1].EpisodeInSeason !== '0')))) && // "501" and no "500"
                       <h1>
-                        {capitalSeasonType + " " + episode.seasonNumber + (seasonTitle == null ? "" : ": " + seasonTitle)}
+                        {capitalSeasonType + " " + episode.SeasonNumber + (seasonTitle == null ? "" : ": " + seasonTitle)}
                       </h1>
                     }
                     <Episode episode={episode}/>
@@ -195,7 +202,12 @@ class ShowResult extends Component {
   componentDidMount() {
     this.loadShowInformation().then((showInfo) => {
       const episodes = showInfo[0];
-      const seasonTitles = showInfo[1];
+      const seasonTitles = Object.keys(JSON.parse(showInfo[1])).sort((left, right) => {
+        return parseInt(left) < parseInt(right)
+      }).map((title) => {
+        return JSON.parse(showInfo[1])[title]
+      })
+
       Object.keys(episodes.map((episode) => (
         this.setState({
           episodes: this.state.episodes.concat(episode),
@@ -211,22 +223,6 @@ class ShowResult extends Component {
         }
       ));
     });
-
-    // try {
-    //   window.onclick = event => {
-    //     for (const e in document.getElementsByClassName('dropdown')) {
-    //       if (!e.contains(event.target)) {
-    //         for (const c in document.getElementsByClassName('dropdown-content')) {
-    //           if (c.style.display === 'block') {
-    //             c.style.display = 'none';
-    //           }
-    //         }
-    //       }
-    //     }
-    //   };
-    // } catch {
-    //   // do nothing
-    // }
   }
 
   async loadShowInformation() {
@@ -238,35 +234,40 @@ class ShowResult extends Component {
     }
     this.setState({language: language});
 
-    const shows = await firebase.database().ref('shows/' + language).once('value');
-    shows.forEach(child => {
-      const show = child.val();
-      if (show.filename === this.state.stripped) {
-        const name = show.name;
-        const description = show.description;
-        const numberOfSeasons = parseInt(show.numberOfSeasons);
-        const seasonType = show.typeOfSeasons;
-        const url = show.url;
-        document.title = name + ' Information';
-        this.setState({showInfo: {description, name, numberOfSeasons, seasonType, url, seasonTitles: []}});
-      }
-    });
+    const proxyurlTwo = "https://cors-anywhere.herokuapp.com/";
+    const urlTwo = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + language + '.json';
+    const showsTwo = await axios.get(proxyurlTwo + urlTwo)
 
-    const snapshot = await firebase.database().ref(this.state.stripped + '/' + language).once('value');
-    const data = [];
-    const seasonTitles = [];
-    snapshot.forEach(child => {
-      const ep = child.val();
-      try {
-        const seasonTitle = ep.seasonTitle;
-        if (!seasonTitles.includes(seasonTitle)) {
-          seasonTitles.push(seasonTitle);
-        }
-      } catch (e) {
-        // no season title, continue
+    const respTwo = showsTwo.data.replace('<pre> ', '').replace('</pre>', '')
+    const jsonTwo = JSON.parse(respTwo);
+    let seasonTitles = []
+
+    for (var i = 0; i < jsonTwo.length; i++) {
+      const show = jsonTwo[i]
+
+      if (show.Filename === this.state.stripped) {
+        const name = show.Name.toString();
+        const description = show.Description.toString();
+        const numberOfSeasons = parseInt(show.NumberOfSeasons);
+        const seasonType = show.TypeOfSeasons.toString();
+        const url = show.URL.toString();
+        seasonTitles = show.SeasonTitles
+        document.title = name + ' Information';
+        this.setState({showInfo: {description, name, numberOfSeasons, seasonType, url, seasonTitles: seasonTitles }});
       }
-      data.push(ep);
-    });
+    }
+
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = 'https://wilcoxcurtis.com/show-dictionary/files/' + this.state.stripped + '_' + language + '.json';
+    const episodes = await axios.get(proxyurl + url)
+    const r = episodes.data.replace('<pre> ', '').replace('</pre>', '')
+    const json = JSON.parse(r);
+
+    const data = [];
+
+    for (i = 0; i < json.length; i++) {
+      data.push(json[i])
+    }
     return [data, seasonTitles];
   }
 

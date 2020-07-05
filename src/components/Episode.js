@@ -5,18 +5,18 @@ import moment from 'moment';
 function Episode({episode}) {
   return (
     <div className='episode'>
-      <span className='code'>{episode.code}</span>
+      <span className='code'>{episode.Code}</span>
 
-      <h1 className='name'>{episode.name}</h1>
+      <h1 className='name'>{episode.Name}</h1>
 
-      <span className="episodenum">{episode.episodeInSeries}</span>
+      <span className="episodenum">{episode.EpisodeInSeries}</span>
 
       <div className="writerairdate">
-        <span className='writer'>{episode.writer}</span>
-        <span className='airdate'>{moment(episode.airdate).format('MMM DD, YYYY').toLocaleString()} </span>
+        <span className='writer'>{episode.Writer}</span>
+        <span className='airdate'>{moment(episode.Airdate).format('MMM DD, YYYY').toLocaleString()} </span>
       </div>
 
-      <div className='summary'>{episode.summary}</div>
+      <div className='summary'>{episode.Summary}</div>
     </div>
   );
 }
