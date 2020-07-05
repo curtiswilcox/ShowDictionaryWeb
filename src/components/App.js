@@ -16,13 +16,13 @@ function App(props) {
       <Switch>
         <Route
           exact={true}
-          path='/show-dictionary/'
+          path='/ShowDictionary/'
           render={(props) =>
             <Home{...props}/>
           }
         />
         <Route
-          path='/show-dictionary/:name'
+          path='/ShowDictionary/:name'
           render={(props) => {
             return (
               <ShowResult{...props}/>
@@ -32,7 +32,7 @@ function App(props) {
         <Route
           path="/:name"
           render={(props) => (
-            <Redirect to={"/show-dictionary/" + strip(props.location.pathname)}/>
+            <Redirect to={"/ShowDictionary/" + strip(props.location.pathname)}/>
           )}
         />
       </Switch>
