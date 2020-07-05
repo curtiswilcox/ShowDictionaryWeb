@@ -69,12 +69,12 @@ class Home extends Component {
   }
 
   async getShows() {
-    let language = '';
-    if (this.state.language === 'en' || this.state.language === 'es') {
-      language = this.state.language;
-    } else {
-      language = 'en';
-    }
+    let language = 'en';
+    // if (this.state.language === 'en' || this.state.language === 'es') {
+    //   language = this.state.language;
+    // } else {
+    //   language = 'en';
+    // }
     this.setState({language: language});
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";

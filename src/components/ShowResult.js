@@ -229,13 +229,13 @@ class ShowResult extends Component {
   }
 
   async loadShowInformation() {
-    let language = '';
-    if (this.state.language === 'en' || this.state.language === 'es') {
-      language = this.state.language;
-    } else {
-      language = 'en';
-    }
-    this.setState({language: language});
+    let language = 'en';
+    // if (this.state.language === 'en' || this.state.language === 'es') {
+    //   language = this.state.language;
+    // } else {
+    //   language = 'en';
+    // }
+    // this.setState({language: language});
 
     const proxyurlTwo = "https://cors-anywhere.herokuapp.com/";
     const urlTwo = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + language + '.json';
