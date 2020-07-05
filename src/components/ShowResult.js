@@ -202,12 +202,15 @@ class ShowResult extends Component {
   componentDidMount() {
     this.loadShowInformation().then((showInfo) => {
       const episodes = showInfo[0];
-      const seasonTitles = Object.keys(JSON.parse(showInfo[1])).sort((left, right) => {
-        return parseInt(left) < parseInt(right)
-      }).map((title) => {
-        return JSON.parse(showInfo[1])[title]
-      })
 
+      let seasonTitles = []
+      if (showInfo[1] !== null && showInfo[1] !== undefined) {
+        seasonTitles = Object.keys(JSON.parse(showInfo[1])).sort((left, right) => {
+          return parseInt(left) < parseInt(right)
+        }).map((title) => {
+          return JSON.parse(showInfo[1])[title]
+        })
+      }
       Object.keys(episodes.map((episode) => (
         this.setState({
           episodes: this.state.episodes.concat(episode),
