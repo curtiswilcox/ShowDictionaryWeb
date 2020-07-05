@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 // import firebase from '../util/firebase';
 import {capitalizeFirstLetter, strip, toggleVisibility} from '../util/helper';
 import DayPicker from 'react-day-picker';
-// import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 // import moment from 'moment';
 import ShowIcon from "./ShowIcon";
 import SearchBar from './SearchBar';
@@ -33,21 +33,21 @@ class ShowResult extends Component {
   }
 
   render() {
-    if (this.state.loading) { return null }
+    // if (this.state.loading) { return null }
     // return null;
 
-    // if (this.state.loading) {
-    //   return (
-    //     <div className='loadingIcon'>
-    //       <Loader
-    //         type={'Ball-Triangle'}
-    //         color={'#00BFFF'}
-    //         height={100}
-    //         width={100}
-    //       />
-    //     </div>
-    //   );
-    // }
+    if (this.state.loading) {
+      return (
+        <div className='loadingIcon'>
+          <Loader
+            type={'BallTriangle'}
+            color={'#00BFFF'}
+            height={100}
+            width={100}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className='episodepage'>

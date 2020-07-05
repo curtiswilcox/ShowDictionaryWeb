@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import ShowIcon from './ShowIcon';
 import {Link} from 'react-router-dom';
 import {strip} from '../util/helper';
-// import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 
 const axios = require('axios');
 
@@ -20,6 +20,19 @@ class Home extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div className='loadingIcon'>
+          <Loader
+            type={'BallTriangle'}
+            color={'#00BFFF'}
+            height={100}
+            width={100}
+          />
+        </div>
+      );
+    }
+
     return (
       <div className='ShowDictionary'>
         {
