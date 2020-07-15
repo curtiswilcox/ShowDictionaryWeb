@@ -1,10 +1,8 @@
 import Episode from './Episode';
 import React, {Component} from 'react';
-// import firebase from '../util/firebase';
 import {capitalizeFirstLetter, strip, toggleVisibility} from '../util/helper';
 import DayPicker from 'react-day-picker';
 import Loader from 'react-loader-spinner';
-// import moment from 'moment';
 import ShowIcon from "./ShowIcon";
 import SearchBar from './SearchBar';
 import {SearchMethod} from "../util/SearchMethod";
@@ -27,15 +25,13 @@ class ShowResult extends Component {
       chosenSearchMethod: '',
       searchText: '',
       hasSelectedSeason: false,
-      language: navigator.language.split('-')[0],
+      language: 'en',
+      // language: navigator.language.split('-')[0],
     };
     document.title = 'Information';
   }
 
   render() {
-    // if (this.state.loading) { return null }
-    // return null;
-
     if (this.state.loading) {
       return (
         <div className='loadingIcon'>
@@ -168,8 +164,6 @@ class ShowResult extends Component {
           <div className='episodes'>
             {
               this.state.filteredEpisodes.map((episode, i) => {
-
-                // console.log('nvmxc,nvmxc,vnxmcvnm,cxnv,xmc172' + this.state.showInfo.seasonTitles)
                 const capitalSeasonType = capitalizeFirstLetter(this.state.showInfo.seasonType);
 
                 let seasonTitle = null;
@@ -211,25 +205,20 @@ class ShowResult extends Component {
           return JSON.parse(showInfo[1])[title]
         })
       }
-      Object.keys(episodes.map((episode) => (
-        this.setState({
-          episodes: this.state.episodes.concat(episode),
-          filteredEpisodes: this.state.filteredEpisodes.concat(episode),
-        })
-      )));
       this.setState(prevState => ({
-          showInfo: {
-            ...prevState.showInfo,
-            seasonTitles,
-          },
-          loading: false,
-        }
-      ));
+        episodes: episodes,
+        filteredEpisodes: episodes,
+        showInfo: {
+          ...prevState.showInfo,
+          seasonTitles,
+        },
+        loading: false,
+      }));
     });
   }
 
   async loadShowInformation() {
-    let language = 'en';
+    // let language = 'en';
     // if (this.state.language === 'en' || this.state.language === 'es') {
     //   language = this.state.language;
     // } else {
@@ -238,7 +227,7 @@ class ShowResult extends Component {
     // this.setState({language: language});
 
     const proxyurlTwo = "https://cors-anywhere.herokuapp.com/";
-    const urlTwo = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + language + '.json';
+    const urlTwo = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + this.state.language + '.json';
     const showsTwo = await axios.get(proxyurlTwo + urlTwo)
 
     const respTwo = showsTwo.data.replace('<pre> ', '').replace('</pre>', '')
@@ -261,7 +250,7 @@ class ShowResult extends Component {
     }
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = 'https://wilcoxcurtis.com/show-dictionary/files/' + this.state.stripped + '_' + language + '.json';
+    const url = 'https://wilcoxcurtis.com/show-dictionary/files/' + this.state.stripped + '_' + this.state.language + '.json';
     const episodes = await axios.get(proxyurl + url)
     const r = episodes.data.replace('<pre> ', '').replace('</pre>', '')
     const json = JSON.parse(r);

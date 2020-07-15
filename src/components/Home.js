@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import firebase from '../util/firebase';
 import ShowIcon from './ShowIcon';
 import {Link} from 'react-router-dom';
 import {strip} from '../util/helper';
@@ -13,7 +12,8 @@ class Home extends Component {
     this.state = {
       loading: true,
       shows: [],
-      language: navigator.language.split('-')[0],
+      // language: navigator.language.split('-')[0],
+      language: 'en',
     };
     this.updateApp = props.updateApp;
     document.title = 'Show Dictionary';
@@ -69,16 +69,16 @@ class Home extends Component {
   }
 
   async getShows() {
-    let language = 'en';
+    // let language = 'en';
     // if (this.state.language === 'en' || this.state.language === 'es') {
     //   language = this.state.language;
     // } else {
     //   language = 'en';
     // }
-    this.setState({language: language});
+    // this.setState({language: language});
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + language + '.json';
+    const url = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + this.state.language + '.json';
     const data = []
 
     const response = await axios.get(proxyurl + url)
