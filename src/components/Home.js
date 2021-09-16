@@ -77,11 +77,10 @@ class Home extends Component {
     // }
     // this.setState({language: language});
 
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + this.state.language + '.json';
     const data = []
 
-    const response = await axios.get(proxyurl + url)
+    const response = await axios.get(url)
 
     const r = response.data.replace('<pre> ', '').replace('</pre>', '')
     const json = JSON.parse(r);

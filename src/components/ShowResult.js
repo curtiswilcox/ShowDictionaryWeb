@@ -226,9 +226,8 @@ class ShowResult extends Component {
     // }
     // this.setState({language: language});
 
-    const proxyurlTwo = "https://cors-anywhere.herokuapp.com/";
     const urlTwo = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + this.state.language + '.json';
-    const showsTwo = await axios.get(proxyurlTwo + urlTwo)
+    const showsTwo = await axios.get(urlTwo)
 
     const respTwo = showsTwo.data.replace('<pre> ', '').replace('</pre>', '')
     const jsonTwo = JSON.parse(respTwo);
@@ -249,9 +248,8 @@ class ShowResult extends Component {
       }
     }
 
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = 'https://wilcoxcurtis.com/show-dictionary/files/' + this.state.stripped + '_' + this.state.language + '.json';
-    const episodes = await axios.get(proxyurl + url)
+    const episodes = await axios.get(url)
     const r = episodes.data.replace('<pre> ', '').replace('</pre>', '')
     const json = JSON.parse(r);
 
