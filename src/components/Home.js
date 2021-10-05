@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {strip} from '../util/helper';
 import Loader from 'react-loader-spinner';
 
-const axios = require('axios');
+// const axios = require('axios');
 
 class Home extends Component {
   constructor(props) {
@@ -80,10 +80,11 @@ class Home extends Component {
     const url = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + this.state.language + '.json';
     const data = []
 
-    const response = await axios.get(url)
+    const response = await fetch(url)
 
-    const r = response.data.replace('<pre> ', '').replace('</pre>', '')
-    const json = JSON.parse(r);
+    // const r = response.data.replace('<pre> ', '').replace('</pre>', '')
+    // const json = JSON.parse(r);
+    const json = await response.json()
     for (var i = 0; i < json.length; i++) {
       const showname = json[i].Name.toString();
       const filename = json[i].Filename.toString()

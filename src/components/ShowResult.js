@@ -9,7 +9,7 @@ import {SearchMethod} from "../util/SearchMethod";
 
 import 'react-day-picker/lib/style.css';
 
-const axios = require('axios');
+// const axios = require('axios');
 
 class ShowResult extends Component {
 
@@ -227,10 +227,10 @@ class ShowResult extends Component {
     // this.setState({language: language});
 
     const urlTwo = 'https://wilcoxcurtis.com/show-dictionary/files/shows_' + this.state.language + '.json';
-    const showsTwo = await axios.get(urlTwo)
+    const showsTwo = await fetch(urlTwo)
 
-    const respTwo = showsTwo.data.replace('<pre> ', '').replace('</pre>', '')
-    const jsonTwo = JSON.parse(respTwo);
+    // const respTwo = showsTwo.data.replace('<pre> ', '').replace('</pre>', '')
+    const jsonTwo = await showsTwo.json();
     let seasonTitles = []
 
     for (var i = 0; i < jsonTwo.length; i++) {
@@ -249,9 +249,10 @@ class ShowResult extends Component {
     }
 
     const url = 'https://wilcoxcurtis.com/show-dictionary/files/' + this.state.stripped + '_' + this.state.language + '.json';
-    const episodes = await axios.get(url)
-    const r = episodes.data.replace('<pre> ', '').replace('</pre>', '')
-    const json = JSON.parse(r);
+    const episodes = await fetch(url)
+    // const r = episodes.data.replace('<pre> ', '').replace('</pre>', '')
+    // const json = JSON.parse(r);
+    const json = await episodes.json()
 
     const data = [];
 
